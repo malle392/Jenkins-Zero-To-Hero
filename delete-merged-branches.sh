@@ -18,6 +18,12 @@ response=$(curl -L \
     if [[ $(echo "$response" | jq -r '.[].message') == "Not found" ]]; then
     echo "Branches not found"
     fi
-# Display branches
+ echo "List out all branches"
   branch=$(echo "$response" | jq -r '.[].name')
   echo "$branch"
+ 
+  echo "List out merged branches"
+  merged_branches=$(echo "$response" | jq -r 'map(select(.commit.sha == null)) | .[].name')
+  echo "$merged_branches"
+
+  #echo "$response"
